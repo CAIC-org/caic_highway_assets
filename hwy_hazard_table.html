@@ -1,0 +1,263 @@
+You're right! My apologies. We need a clear separating line between the bullet point groups (None, Notice, Caution, and Warning), meaning the line must extend completely across the table where one hazard level ends and the next begins.
+
+The issue was that the border-bottom for the right column was being stripped out when I removed the internal lines.
+
+Here is the code, with the CSS fixed to ensure the horizontal line appears below the last row of each group, separating the hazard levels clearly:
+
+Final Revised HTML and CSS (Separating Lines Across)
+The primary fix is ensuring that the last cell (td:last-child) of the class .has-bottom-border receives a strong bottom border, overriding the previous instructions to remove it.
+
+HTML
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hazard Rating Operational Procedures</title>
+    <style>
+        /* General Styles for Clean Look */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+        }
+
+        /* Responsive Wrapper to Handle Horizontal Scroll on Small Screens */
+        .table-responsive-wrapper {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        /* Header Table Styling */
+        .title-table {
+            background-color: #e6f0ff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .title-table td {
+            color: #1a73e8;
+            font-size: 1.1em;
+            padding: 15px;
+            font-weight: bold;
+        }
+
+        /* Main Table Styling */
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            min-width: 650px;
+        }
+
+        .main-table th {
+            background-color: #4a6c8b;
+            color: white;
+            padding: 12px 8px;
+            font-size: 0.9em;
+            text-align: left;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        /* Base TD styling */
+        .main-table td {
+            padding: 10px 12px;
+            font-size: 0.85em;
+            border: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+        
+        /* LEVEL Column (First TD) - Keeps the large box border */
+        .main-table td:first-child {
+             border: 1px solid #e0e0e0; 
+             border-right: 1px solid #e0e0e0;
+        }
+
+        /* PROCEDURES Column (Second TD) - Removes ALL internal horizontal lines */
+        .main-table td:last-child {
+            border-top: none !important; 
+            border-bottom: none !important; /* Temporarily remove for internal rows */
+            border-left: none !important;
+            border-right: 1px solid #e0e0e0; /* Keep the vertical separator */
+        }
+        
+        /* FIRST procedure cell of the group: Needs a top border to complete the box top */
+        /* Use :nth-child selector to target the row that starts the group */
+        .main-table tbody tr:first-child td:last-child, 
+        .main-table tbody tr:nth-child(3) td:last-child,
+        .main-table tbody tr:nth-child(7) td:last-child,
+        .main-table tbody tr:nth-child(13) td:last-child {
+            border-top: 1px solid #e0e0e0 !important;
+        }
+
+        /* Apply the full bottom border to the LAST row of each group */
+        .has-bottom-border td {
+            border-bottom: 1px solid #e0e0e0 !important;
+        }
+        
+        /* IMPORTANT: This rule ensures the line GOES ACROSS, including the Procedures column's bottom */
+        .has-bottom-border td:last-child {
+            border-bottom: 1px solid #e0e0e0 !important; 
+        }
+
+        /* Specific Cell Styling (LEVEL column) */
+        .main-table .level-cell {
+            text-align: center;
+            vertical-align: middle;
+            width: 150px;
+        }
+
+        /* Image Styling */
+        .main-table img {
+            max-height: 25px;
+            min-height: auto;
+            width: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Icon Container within LEVEL column */
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<table width="100%" cellpadding="0" cellspacing="0" class="title-table">
+    <tr>
+        <td>
+            Hazard Rating Operational Procedures
+        </td>
+    </tr>
+</table>
+
+<div class="table-responsive-wrapper">
+    <table cellpadding="0" cellspacing="0" class="main-table">
+        <thead>
+            <tr>
+                <th style="text-align:center;">
+                    LEVEL
+                </th>
+                <th style="text-align:left; border-right: none;">
+                    OPERATIONAL PROCEDURES
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td class="level-cell" rowspan="2">
+                    <div class="icon-container">
+                        <img src="https://github.com/CAIC-org/caic_highway_assets/blob/main/None.png?raw=true" alt="None Icon">
+                        <img src="https://github.com/CAIC-org/caic_highway_assets/blob/main/NONE_BLOCK.png?raw=true" alt="None">
+                    </div>
+                </td>
+                <td>
+                    • No operational changes for avalanche hazard
+                </td>
+            </tr>
+            <tr class="has-bottom-border">
+                <td>
+                    • Notify CAIC forecaster of any avalanche activity
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="level-cell" rowspan="4">
+                    <div class="icon-container">
+                        <img src="https://github.com/CAIC-org/caic_highway_assets/blob/main/Notice.png?raw=true" alt="Notice Icon">
+                        <img src="https://github.com/CAIC-org/caic_highway_assets/blob/main/NOTICE_BLOCK.png?raw=true" alt="Notice">
+                    </div>
+                </td>
+                <td>
+                    • Avalanche rescue equipment required (wear beacon; carry shovel and probe in vehicle)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    • Do not stop traffic in avalanche areas
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    • Move stopped travelers out of avalanche areas
+                </td>
+            </tr>
+            <tr class="has-bottom-border">
+                <td>
+                    • Notify supervisor before working outside of your vehicle in an avalanche area
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="level-cell" rowspan="6">
+                    <div class="icon-container">
+                        <img src="https://github.com/CAIC-org/caic_highway_assets/blob/main/Caution.png?raw=true" alt="Caution Icon">
+                        <img src="https://github.com/CAIC-org/caic_highway_assets/blob/main/CAUTION_BLOCK.png?raw=true" alt="Caution">
+                    </div>
+                </td>
+                <td>
+                    • Avalanche rescue equipment required (wear beacon; carry shovel and probe in vehicle)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    • Do not stop traffic in avalanche areas
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    • Move stopped travelers out of avalanche areas
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    • Do not work outside of a vehicle in avalanche areas
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    • Notify supervisor and/or CAIC forecaster before performing any stationary work or removing debris in an avalanche area
+                </td>
+            </tr>
+            <tr class="has-bottom-border">
+                <td>
+                    • Use a spotter when working in an avalanche area
+                </td>
+            </tr>
+
+             <tr>
+                <td class="level-cell" rowspan="3">
+                    <div class="icon-container">
+                        <img src="https://github.com/CAIC-org/caic_highway_assets/blob/main/Warning.png?raw=true" alt="Warning Icon">
+                        <img src="https://github.com/CAIC-org/caic_highway_assets/blob/main/WARNING_BLOCK.png?raw=true" alt="Warning">
+                    </div>
+                </td>
+                <td>
+                    • Avalanche rescue equipment required (wear beacon; carry shovel and probe in vehicle)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    • Maintenance work limited to non-avalanche areas
+                </td>
+            </tr>
+            <tr class="has-bottom-border">
+                <td>
+                    • Consult senior supervisor and CAIC forecaster before entering avalanche areas
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
