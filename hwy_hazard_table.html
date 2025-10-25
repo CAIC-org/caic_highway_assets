@@ -1,14 +1,3 @@
-You're right! My apologies. We need a clear separating line between the bullet point groups (None, Notice, Caution, and Warning), meaning the line must extend completely across the table where one hazard level ends and the next begins.
-
-The issue was that the border-bottom for the right column was being stripped out when I removed the internal lines.
-
-Here is the code, with the CSS fixed to ensure the horizontal line appears below the last row of each group, separating the hazard levels clearly:
-
-Final Revised HTML and CSS (Separating Lines Across)
-The primary fix is ensuring that the last cell (td:last-child) of the class .has-bottom-border receives a strong bottom border, overriding the previous instructions to remove it.
-
-HTML
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -260,4 +249,5 @@ HTML
     </table>
 </div>
 </body>
+
 </html>
